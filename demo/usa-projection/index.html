@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery.qtip.min.js"></script>
+    <script src="../../lib/raphael-min.js"></script>
+    <script src="../../dist/kartograph.js"></script>
+    <style>
+        path{
+            /*z-index: 1;*/
+            position: relative;
+        }
+        path:hover {
+            transition: all 0.5s;
+            position:absolute;
+            transform: translate(-5px, -5px);
+            z-index: 100!important;
+            /*box-shadow: 10px 10px 5px #888888;*/
+            /*-moz-box-shadow: 10px 10px 5px #888888;*/
+        }
+    </style>
+    <script type="text/javascript">
+
+        $(function () {
+
+            var map = kartograph.map('#map');
+
+            map.loadMap('usa.svg', function () {
+
+                map.addLayer('layer0', {
+                    styles: {
+                        stroke: '#aaa',
+                        fill: '#f6f4f2'
+                    },
+                    mouseenter: function (d, path) {
+                        path.attr('fill', Math.random() < 0.5 ? '#c04' : '#04c');
+                    },
+                    mouseleave: function (d, path) {
+                        path.animate({fill: '#f6f4f2'}, 1000);
+                    }
+                });
+
+                var points_of_interest = [
+                    {name: 'Juneau, AK', lat: 58.3, lon: -134.416667},
+                    {name: 'Honolulu, HI', lat: 21.3, lon: -157.816667},
+                    {name: 'San Francisco, CA', lat: 37.783333, lon: -122.416667},
+                ];
+
+                map.addSymbols({
+                    type: kartograph.LabeledBubble,
+                    data: points_of_interest,
+                    location: function (d) {
+                        return [d.lon, d.lat]
+                    },
+                    title: function (d) {
+                        return d.name;
+                    },
+                    radius: 3,
+                    center: false,
+                    attrs: {fill: 'black'},
+                    labelattrs: {'font-size': 11},
+                    buffer: true
+                });
+
+            }, {padding: 30});
+        });
+
+    </script>
+
+</head>
+<body>
+
+<div id="map" style="position: relative"></div>
+
+</body>
+
