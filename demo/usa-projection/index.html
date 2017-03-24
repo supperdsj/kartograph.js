@@ -6,17 +6,21 @@
     <script src="../../lib/raphael-min.js"></script>
     <script src="../../dist/kartograph.js"></script>
     <style>
-        path{
-            /*z-index: 1;*/
+         path {
             position: relative;
         }
+
         path:hover {
             transition: all 0.5s;
-            position:absolute;
+            position: absolute;
             transform: translate(-5px, -5px);
-            z-index: 100!important;
-            /*box-shadow: 10px 10px 5px #888888;*/
-            /*-moz-box-shadow: 10px 10px 5px #888888;*/
+            z-index: 100 !important;
+            box-shadow: 10px 10px 5px #888888;
+            -moz-box-shadow: 10px 10px 5px #888888;
+        }
+        #map svg{
+            background-image: url('./map.png');
+            background-size: 100% 100%;
         }
     </style>
     <script type="text/javascript">
@@ -25,52 +29,53 @@
 
             var map = kartograph.map('#map');
 
-            map.loadMap('usa.svg', function () {
+            map.loadMap('./path/map.svg', function (map) {
 
                 map.addLayer('layer0', {
+                    name: 'hefei',
                     styles: {
-                        stroke: '#aaa',
-                        fill: '#f6f4f2'
+                        stroke: 'rgba(0,0,0,0)',
+                        fill: 'rgba(0,0,0,0)'
                     },
                     mouseenter: function (d, path) {
-                        path.attr('fill', Math.random() < 0.5 ? '#c04' : '#04c');
+                        path.attr('fill', 'rgba(14,42,138,1)');
                     },
                     mouseleave: function (d, path) {
-                        path.animate({fill: '#f6f4f2'}, 1000);
+                        path.attr('fill', 'rgba(0,0,0,0)');
                     }
                 });
 
-                var points_of_interest = [
-                    {name: 'Juneau, AK', lat: 58.3, lon: -134.416667},
-                    {name: 'Honolulu, HI', lat: 21.3, lon: -157.816667},
-                    {name: 'San Francisco, CA', lat: 37.783333, lon: -122.416667},
-                ];
+//                var points_of_interest = [
+//                    {name: 'Juneau, AK', lat: 58.3, lon: -134.416667},
+//                    {name: 'Honolulu, HI', lat: 21.3, lon: -157.816667},
+//                    {name: 'San Francisco, CA', lat: 37.783333, lon: -122.416667},
+//                ];
 
-                map.addSymbols({
-                    type: kartograph.LabeledBubble,
-                    data: points_of_interest,
-                    location: function (d) {
-                        return [d.lon, d.lat]
-                    },
-                    title: function (d) {
-                        return d.name;
-                    },
-                    radius: 3,
-                    center: false,
-                    attrs: {fill: 'black'},
-                    labelattrs: {'font-size': 11},
-                    buffer: true
-                });
+//                map.addSymbols({
+//                    type: kartograph.LabeledBubble,
+//                    data: points_of_interest,
+//                    location: function (d) {
+//                        return [d.lon, d.lat]
+//                    },
+//                    title: function (d) {
+//                        return d.name;
+//                    },
+//                    radius: 3,
+//                    center: false,
+//                    attrs: {fill: 'black'},
+//                    labelattrs: {'font-size': 11},
+//                    buffer: true
+//                });
 
-            }, {padding: 30});
+            }, {padding: 0});
         });
 
     </script>
 
 </head>
 <body>
-
-<div id="map" style="position: relative"></div>
-
+<div style="position: fixed;left: 0;right: 0;top: 0;bottom: 0;background-color: ##0A305E;">
+    <div id="map" style="position: relative;"></div>
+</div>
 </body>
 
